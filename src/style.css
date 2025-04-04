@@ -1,0 +1,52 @@
+/* Botón rojo */
+.btn-red {
+    background-color: rgba(214, 67, 67, 0.87);
+    color: white;
+    border: none;
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-red:hover {
+    background-color: darkred; /* Color más oscuro al pasar el mouse */
+}
+
+/* Botón verde */
+.btn-green {
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-green:hover {
+    background-color: #033120; /* Color más oscuro al pasar el mouse */
+}
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex; /* Añade esta línea */
+  justify-content: flex-end; /* Añade esta línea */
+  align-items: center; /* Añade esta línea */
+}
+/* Contenedor para la escena de Three.js */
+/* Contenedor para la escena de Three.js */
+#three-container {
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+    z-index: -1;
+    overflow: hidden;
+    left:0;
+ }
+ 
