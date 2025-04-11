@@ -8,23 +8,24 @@
 <body>
     <nav class="navbar">
         <div style="padding-right: 2%; padding-top: 2%;">
-        <a href="#about" class="nav-button active"><button class="btn-green">About</button></a>
-        <a href="#skills" class="nav-button"><button class="btn-green">Skills</button></a>
-        <a href="#projects" class="nav-button"><button class="btn-green">Projects</button></a>
-        <a href="public/files/LucaMadoniaResume.pdf" class="nav-button"><button class="btn-red">Resume</button></a>
+        <a href="about.html" data-file="about.html"  class="nav-button active"><button class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">About</button></a>
+        <a href="skills.html" data-file="skills.html" class="nav-button"><button class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">Skills</button></a>
+        <a href="#projects" data-file="projects.html" class="nav-button"><button class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-blue-500 rounded">Projects</button></a>
+        <a href="public/files/LucaMadoniaResume.pdf" class="nav-button"><button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded">Resume</button></a>
         </div>
     </nav><br>
-    <div style="padding-top: 10%;">
-        <img src="src/typescript.svg" alt="" style="width: 128px; height: 128px;">
-        <h1 style="color: white;">Luca Madonia</h1>
-        <legend style="width: 40%;">
+    <div id="content-container" style="padding-top: 10%;" class="pl-10">
+         <img src="src/typescript.svg" alt="" style="width: 128px; height: 128px;">
+        <h1 style="color: white;" class="text-5xl font-bold">Luca Madonia</h1>
+        <legend style="width: 40%;" class="text-md font-bold text-gray-900 dark:text-white">
             <p style="color: white;">
                 Welcome to my portfolio! I'm a passionate back-end developer dedicated to building
                 robust and efficient solutions. My primary focus is on creating RESTful APIs, web services, and database management systems that power modern applications.
             </p>
         </legend><br>
+        <div id="three-container" class="back-graphics"></div>
     </div>
-    <div id="three-container"></div>
     <script type="module" src="/src/main.ts"></script>
+
 </body>
 </html>
