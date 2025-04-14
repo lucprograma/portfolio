@@ -16,7 +16,7 @@ navButtons.forEach(button => {
         const targetId = button.dataset.file;
         if (targetId) {
             const onLoaded = LoadActions[targetId];
-            loadContent(targetId, contentContainer, onLoaded ? [onLoaded] : []); 
+            loadContent(targetId, contentContainer, onLoaded); 
         }
     });
 });
@@ -28,28 +28,7 @@ const pointLight = new THREE.PointLight(0xffffff, 0x444444); // Luz blanca inten
 pointLight.position.set(5, 5, 5); // Posición de la luz
 render?.Scene.add(pointLight);
 loadScene()
-// Crear un cubo luminoso azul
-// const geometry = new THREE.BoxGeometry();
-// const material = new THREE.MeshStandardMaterial({
-//     color: 0x0000ff, // Azul
-//     emissive: 0x0000ff, // Emisión de luz azul
-//     emissiveIntensity: 1, // Intensidad de la emisión
-//     metalness: 0.2, // Efecto metálico
-//     roughness: 0.7, // Rugosidad
-// });
-// const cube = new THREE.Mesh(geometry, material);
-// const cube1 = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.7), material);
-// const cube2 = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.5), material);
-// const listCubes = [cube, cube1, cube2];
-// cube.position.set(5, -2, 0); 
-// cube1.position.set(3, 0, 0);
-// cube2.position.set(5.5, 1, 0);
-// randomRotation(listCubes); // Llamar a la función de rotación aleatoria
-// // Añadir los cubos a la escena
-// render?.Scene.add(cube);
-// render?.Scene.add(cube1)
-// render?.Scene.add(cube2)
-//Funcion rotacion random para los cubos
+
 function randomRotation(cubes: Array<THREE.Mesh>) {
     cubes.forEach(cube => {
         cube.rotation.x = Math.random() * Math.PI;
@@ -79,6 +58,7 @@ window.addEventListener('resize', render.onWindowResize, false);
 }
 export function loadScene(): void {
     clearObjects(); // Limpiar objetos existentes
+    if (!render) return;
     const cube1 =  objectFactory('cube', new THREE.Vector3(5, -2, 0));
     const cube2 = objectFactory('cube', new THREE.Vector3(3, 0, 0), 0.7);
     const cube3 =  objectFactory('cube', new THREE.Vector3(5.5, 1, 0), 0.5);
@@ -87,12 +67,49 @@ export function loadScene(): void {
         console.log(object)
         render?.Scene.add(object.mesh); // Añadir el objeto a la escena
     })
-    const sceneContainer = document.getElementById('three-container');
-    if (sceneContainer) {
-        sceneContainer.innerHTML = ''; // Limpiar el contenedor antes de cargar la escena
-        if (render?.Renderer.domElement) {
-            sceneContainer.appendChild(render.Renderer.domElement); // Añadir el renderizador al contenedor
-        }
+    const loader = new THREE.TextureLoader();
+    render.Scene.background = loader.load('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgM44z5na5aQGymKJqakPt0NPjtoCGUvxtBg&s');
+    addRendererToContainer(); // Añadir el renderizador al contenedor
+}
+export function loadOrbs(): void {
+    clearObjects(); // Limpiar objetos existentes
+    if (!render) return;
+    const orb1 = objectFactory('orb', new THREE.Vector3(0, 0, 0), 0.5);
+    const orb2 = objectFactory('orb', new THREE.Vector3(1, 1, 0), 0.5);
+    const orb3 = objectFactory('orb', new THREE.Vector3(-1, -1, 0), 0.5);
+    objectsToAnimate = [orb1, orb2, orb3];
+    objectsToAnimate.forEach((object) => {
+        render.Scene.add(object.mesh); // Añadir el objeto a la escena
+    })
+    const loader = new THREE.TextureLoader();
+    render.Scene.background = loader.load('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaE5oZcSVbIz7s6EPaxeGhoSgLP_1Z99MmlA&s'); // Fondo de la escena
+    addRendererToContainer(); // Añadir el renderizador al contenedor
+}
+function addRendererToContainer(): void {
+    // Verificar si el contenedor principal existe
+    if (!contentContainer) {
+        console.error("El contenedor principal 'content-container' no existe.");
+        return;
+    }
+
+    // Verificar si el contenedor de la escena existe
+    let sceneContainer = document.getElementById('three-container');
+    if (!sceneContainer) {
+        // Crear el contenedor si no existe
+        sceneContainer = document.createElement('div');
+        sceneContainer.id = 'three-container';
+        sceneContainer.className = 'absolute inset-0 w-full h-100% z-[-4] overflow-hidden';
+        contentContainer.appendChild(sceneContainer);
+    }
+
+    // Limpiar el contenido del contenedor de la escena
+    sceneContainer.innerHTML = '';
+
+    // Agregar el renderizador al contenedor
+    if (render?.Renderer.domElement) {
+        sceneContainer.appendChild(render.Renderer.domElement);
+    } else {
+        console.error("El renderizador no está disponible.");
     }
 }
 function clearObjects() {
