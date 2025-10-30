@@ -9,7 +9,6 @@ export async function loadContent(url: string, contentContainer: HTMLElement | n
         }
         const html = await response.text(); // Obtener el contenido como texto
         if (contentContainer) {
-            const threeContainer = document.getElementById("three-container")
             console.log(html)
             contentContainer.innerHTML = ''; // Limpia el contenedor antes de insertar contenido nuevo
             contentContainer.innerHTML = html; // Insertar el contenido en el contenedor

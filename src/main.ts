@@ -3,8 +3,7 @@ import * as THREE from 'three'; // Importa la biblioteca Three.js
 import './style.css'; // Importa el archivo CSS
 import { loadContent, LoadActions } from './utils/contentManager'; // Importa la función para cargar contenido HTML
 import RendererManager from './treejs/renderer'; // Importa el módulo de renderizado
-import { Renderer } from 'three/webgpu';
-import { AnimationStrategy, objectFactory, MeshWithStrategy} from './treejs/animationStrategies'; // Importa la estrategia de animación
+import { objectFactory, MeshWithStrategy} from './treejs/animationStrategies'; // Importa la estrategia de animación
 const contentContainer = document.getElementById("content-container"); // Obtiene el contenedor de contenido
 const navButtons = document.querySelectorAll<HTMLButtonElement>('.nav-button');
 const container = document.getElementById('three-container');
@@ -29,13 +28,6 @@ pointLight.position.set(5, 5, 5); // Posición de la luz
 render?.Scene.add(pointLight);
 loadScene()
 
-function randomRotation(cubes: Array<THREE.Mesh>) {
-    cubes.forEach(cube => {
-        cube.rotation.x = Math.random() * Math.PI;
-        cube.rotation.y = Math.random() * Math.PI;
-        cube.rotation.z = Math.random() * Math.PI;
-    });
-}
 // Función de animación
 
 let clock = new THREE.Clock()

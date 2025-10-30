@@ -9,14 +9,13 @@ const cubeStrategy: AnimationStrategy = (instance: THREE.Mesh, delta: number) =>
     instance.rotation.z += delta * 0.2;
 }
 const orbStrategy: AnimationStrategy = (instance: THREE.Mesh, delta: number) => {
-    const angleOffset = instance.userData.angleOffset
-    const radius = instance.userData.radius
-    const time = Date.now() * 0.001;
-    const angle = time + angleOffset; // Usar el offset para la rotación 
-    instance.rotation.y += 0.01; // Rotación constante en el eje Y
+    const angleOffset = instance.userData.angleOffset || 0; // Offset inicial
+    const radius = instance.userData.radius || 4; // Radio de la trayectoria
+    instance.userData.time = (instance.userData.time || 0) + delta; // Acumular tiempo usando delta
+    const angle = instance.userData.time + angleOffset; // Usar el tiempo acumulado y el offset
+    instance.rotation.y += delta * 0.01; // Rotación constante en el eje Y
     instance.position.x = Math.sin(angle) * radius; // Movimiento circular en el eje X
     instance.position.z = Math.cos(angle) * radius; // Movimiento circular en el eje Z
-    
 };
 type MeshWithStrategy = {
     mesh: THREE.Mesh;
@@ -36,7 +35,6 @@ const objectFactory = (type: 'cube' | 'orb',pos: THREE.Vector3 = new THREE.Vecto
             return { mesh, strategy: cubeStrategy };
         }
         case 'orb': {
-            const randNumber = Math.random()  
             const randScale = randFloat(0.1, 0.3);
             const geometry = new THREE.SphereGeometry(randScale, 32, 32);
             const material = new THREE.MeshStandardMaterial({   color: 0xff0000,         // Rojo
